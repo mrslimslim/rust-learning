@@ -1,11 +1,11 @@
+use std::cmp::max;
 use std::ops::Add;
 // rust 中的类 class
-
 
 // struct 定义DATA impl定义方法
 // trait 抽象行为 动作
 // 其他语言class 中同时定义数据和属性
-struct Point<T>{
+struct Point<T> {
     x: T,
     y: T,
 }
@@ -24,16 +24,16 @@ struct Point<T>{
 //     }
 // }
 
-// 如果不使用new 
+// 如果不使用new
 
 impl<T> Point<T> {
     // &self 表示该方法对 Rectangle 的不可变借用
-    pub fn get_x(&self) ->&T {
-        return &self.x
+    pub fn get_x(&self) -> &T {
+        return &self.x;
     }
 
     pub fn get_y(&self) -> &T {
-        return &self.y
+        return &self.y;
     }
     // &mut self 表示可变借用
     pub fn set_x(&mut self, x: T) {
@@ -44,8 +44,9 @@ impl<T> Point<T> {
         self.y = y;
     }
 
-    pub fn get_distance(self) -> T 
-    where T: Add<T, Output=T>
+    pub fn get_distance(self) -> T
+    where
+        T: Add<T, Output = T>,
     {
         self.x + self.y
     }
@@ -57,12 +58,11 @@ impl<T> Point<T> {
     }
 }
 
-
 pub trait Person {
-    fn new (name: String, grade: String) -> Self;
+    fn new(name: String, grade: String) -> Self;
     fn walk(&self);
     fn talk(&self);
-    fn get_name(&self)-> String;
+    fn get_name(&self) -> String;
     // 兜底函数 可以被重载
     fn sing(&self) {
         println!("sing");
@@ -71,22 +71,19 @@ pub trait Person {
 
 pub struct Student {
     name: String,
-    grade: String
+    grade: String,
 }
 
 impl Person for Student {
-    fn new (name: String, grade: String) -> Student {
-        Student {
-            name,
-            grade
-        }
+    fn new(name: String, grade: String) -> Student {
+        Student { name, grade }
     }
 
-    fn walk(&self){
+    fn walk(&self) {
         println!("walk");
     }
 
-    fn talk(&self){
+    fn talk(&self) {
         println!("talk");
     }
 
@@ -95,18 +92,34 @@ impl Person for Student {
     }
 }
 
+// 形参包含多个参数的，要使用生命周期注解
+// 在存在多个引用时，编译器有时会无法自动推导生命周期
+fn longest<'a>(x: &'a str, y: &'a str) -> usize {
+    let x_len = x.len();
+    let y_len = y.len();
+
+    max(x_len, y_len)
+}
+
+fn dangle<'a>() -> &'a str {
+    let s: &'a str = "hello";
+    s
+}
 
 fn main() {
     let mut point = Point { x: 1.0, y: 2.0 };
-
     let xiaoming = Student::new(String::from("小明"), "456".to_string());
-    let x =  point.get_x();
+    let x = point.get_x();
     println!("{}, {}", "point_x is", x);
     point.set_x(3.0);
-    println!("{}, {}", "point_x is",  point.get_x());
+    println!("{}, {}", "point_x is", point.get_x());
     let dist = point.get_distance();
-    println!("{}, {}", "point_dist is",  dist);
+    println!("{}, {}", "point_dist is", dist);
     let name = xiaoming.get_name();
-    println!("{}, {}", "student name is",  name);
-}
+    println!("{}, {}", "student name is", name);
+    let len = longest("longgonggg word", "short word");
+    println!("{}, {}", "longest word is", len);
 
+    let dangle_str = dangle();
+    println!("{}, {}", "dangle_str is", dangle_str);
+}
