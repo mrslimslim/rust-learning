@@ -1,0 +1,45 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: tengyu
+ * @Date: 2022-06-05 23:18:53
+ * @LastEditors: tengyu
+ * @LastEditTime: 2022-06-06 00:19:05
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="module">
+        async function main() {
+            {
+                let now1 = performance.now();
+                for (let i of Array(100)) {
+                    inert();
+                }
+                let now2 = performance.now()
+                let consume = now2 - now1;
+                document.body.append(`JS ${consume * 100}ms`);
+            }
+        }
+
+        function inert() {
+            const selct = document.createElement('div');
+            const input = document.createElement('div');
+            selct.innerHTML = "I am select";
+            input.innerHTML = "I am input";
+            document.body.append(input);
+            document.body.append(selct);
+        }
+        main();
+    </script>
+</body>
+
+</html>

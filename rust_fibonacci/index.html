@@ -1,0 +1,53 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: tengyu
+ * @Date: 2022-06-04 00:08:58
+ * @LastEditors: tengyu
+ * @LastEditTime: 2022-06-04 00:14:18
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="module">
+        import init, { fibonacci } from './pkg/rust_fibonacci.js';
+
+        async function run() {
+            await init();
+            console.time('wasm');
+            fibonacci(5);
+            fibonacci(3);
+            fibonacci(4);
+            fibonacci(6);
+            fibonacci(7);
+            fibonacci(40);
+            console.timeEnd('wasm');
+            console.time('js');
+            origin_fast_fibonacci(5);
+            origin_fast_fibonacci(3);
+            origin_fast_fibonacci(4);
+            origin_fast_fibonacci(6);
+            origin_fast_fibonacci(7);
+            fibonacci(40);
+            console.timeEnd('js');
+        }
+        run();
+
+        function origin_fast_fibonacci(n) {
+            if (n <= 1) {
+                return n;
+            }
+            return origin_fast_fibonacci(n - 1) + origin_fast_fibonacci(n - 2);
+        }
+    </script>
+</body>
+
+</html>

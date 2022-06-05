@@ -1,0 +1,61 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: tengyu
+ * @Date: 2022-06-03 22:31:26
+ * @LastEditors: tengyu
+ * @LastEditTime: 2022-06-03 23:25:34
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="module">
+        import init, { two_sum } from './pkg/two_sum.js';
+        async function run() {
+            console.time('load');
+            await init();
+            console.timeEnd('load');
+            console.time('wasm');
+            for (let i of Array(100000)) {
+                two_sum([1, 2, 3], 4);
+                two_sum([1, 2, 3], 4);
+                two_sum([1, 2, 3], 4);
+                two_sum([1, 2, 3], 4);
+            }
+
+            console.timeEnd('wasm');
+            console.time('origin');
+            for (let i of Array(100000)) {
+                origin_two_sum([1, 2, 3], 4)
+                origin_two_sum([1, 2, 3], 4)
+                origin_two_sum([1, 2, 3], 4)
+                origin_two_sum([1, 2, 3], 4)
+            }
+            console.timeEnd('origin');
+        }
+
+        run();
+
+        function origin_two_sum(nums, target) {
+            let map = {};
+            for (let i = 0; i < nums.length; i++) {
+                let diff = target - nums[i];
+                if (map[diff] !== undefined) {
+                    return [map[diff], i];
+                }
+                map[nums[i]] = i;
+            }
+        }
+
+    </script>
+</body>
+
+</html>

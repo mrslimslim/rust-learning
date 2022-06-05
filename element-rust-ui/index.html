@@ -1,0 +1,48 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: tengyu
+ * @Date: 2022-06-05 23:18:53
+ * @LastEditors: tengyu
+ * @LastEditTime: 2022-06-06 00:19:29
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="module">
+        import init, { run } from './pkg/element_rust_ui.js';
+
+        async function main() {
+            await init();
+            let now1 = performance.now();
+            for await (let i of Array(100)) {
+                run();
+            }
+            let now2 = performance.now();
+            const consume = now2 - now1;
+            // document.write('WASM ', consume + 'ms');
+            document.body.append(`WASM ${consume}ms`);
+
+        }
+
+        function inert() {
+            const selct = document.createElement('div');
+            const input = document.createElement('div');
+            selct.innerHTML = "I am select";
+            input.innerHTML = "I am input";
+            document.body.append(input);
+            document.body.append(selct);
+        }
+        main();
+    </script>
+</body>
+
+</html>
