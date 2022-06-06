@@ -70,7 +70,7 @@ impl Component for ElementInput {
         let document = window.document().expect("should have a document on window");
         let body = document.body().expect("document should have a body");
 
-        let dom = document.create_element("div")?;
+        let dom = document.create_element("div").expect("it should be a dom");
         dom.set_inner_html(&self.value);
         body.append_child(&dom)?;
         Ok(())
