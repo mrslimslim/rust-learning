@@ -55,4 +55,4 @@ lto = true
 
 [profile.dev]
 lto = true
-opt-level = 1
+opt-level = 2
