@@ -4,8 +4,10 @@
  * @Autor: tengyu
  * @Date: 2022-06-11 11:55:07
  * @LastEditors: tengyu
- * @LastEditTime: 2022-06-12 21:27:20
+ * @LastEditTime: 2022-06-19 11:57:38
  */
+#![allow(dead_code)]
+#[warn(non_snake_case)]
 // 会提升
 // use http::method::Method;
 // use http::Request;
@@ -25,7 +27,3 @@ fn main() {
     HEADERS \r\n
     BODY;
 */
-
-fn foo<'a>(x: &'a str, y: &str) -> &'a str {
-    x
-}
