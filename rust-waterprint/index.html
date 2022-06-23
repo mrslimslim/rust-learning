@@ -4,7 +4,7 @@
  * @Autor: tengyu
  * @Date: 2022-06-23 00:03:13
  * @LastEditors: tengyu
- * @LastEditTime: 2022-06-23 00:08:14
+ * @LastEditTime: 2022-06-23 23:16:47
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -24,20 +24,75 @@
             width: 200px;
             height: 200px;
         }
+
+        .container2 {
+            width: 200px;
+            height: 200px;
+        }
     </style>
 </head>
 
 <body>
     <div class="container"></div>
+    <div class="container2"></div>
     <script type="module">
         import init, { generate_watermark } from "./pkg/rust_waterprint.js";
 
         async function run() {
             await init();
-            generate_watermark(".container");
+            console.time('aaa');
+            raw_waterprint(".container2");
+            raw_waterprint(".container2");
+            raw_waterprint(".container2");
+            raw_waterprint(".container2");
+            raw_waterprint(".container2");
+            console.timeEnd('aaa');
+            console.time('bbb');
+            try {
+                generate_watermark(".container");
+
+            } catch (e) {
+            }
+            try {
+                generate_watermark(".container");
+
+            } catch (e) {
+            }
+            try {
+                generate_watermark(".container");
+
+            } catch (e) {
+            }
+            try {
+                generate_watermark(".container");
+
+            } catch (e) {
+            }
+            try {
+                generate_watermark(".container");
+
+            } catch (e) {
+            }
+
+            console.timeEnd('bbb');
+
         }
 
         run();
+
+        function raw_waterprint(container2) {
+            const node = document.querySelector(container2);
+            const canvas = document.createElement("canvas");
+            canvas.width = node.offsetWidth;
+            canvas.height = node.offsetHeight;
+            const ctx = canvas.getContext("2d");
+            ctx.font = "24px Times New Roman";
+            ctx.fillStyle = "#0000FF";
+            ctx.textAlign = "right";
+            ctx.fillText("I am waterprint", canvas.width - 20, canvas.height - 20);
+            const base64 = canvas.toDataURL("image/png");
+            node.style.backgroundImage = `url(${base64})`;
+        }
     </script>
 </body>
 
